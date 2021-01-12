@@ -5,14 +5,15 @@ import { ProductsService } from "./products.service";
 export class ProductsController {
 
     constructor(private productsService: ProductsService){}
-
+    
+    //adding a new product
     @Post()
-    addProduct(
+    async addProduct(
         @Body('title') prodTitle: string, 
         @Body('description') prodDesc: string, 
         @Body('price') prodPrice: number
         ) {
-       const generatedId = this.productsService.insertProduct(
+       const generatedId = await this.productsService.insertProduct(
            prodTitle, 
            prodDesc, 
            prodPrice
@@ -20,16 +21,19 @@ export class ProductsController {
         return {id: generatedId}
     }
 
+    //getting all existing products
     @Get()
     getAllProducts() {
        return this.productsService.getProducts();
     }
 
+    //getting a single product
     @Get(':id') 
     getProduct(@Param('id') prodId: string){
         return this.productsService.getSingleProduct(prodId);
     }
 
+    //updating a product
     @Patch(':id')
     updateProducts(
     @Param('id') prodId: string,  
@@ -40,6 +44,7 @@ export class ProductsController {
         return null;
     }
 
+    //deleting a product
     @Delete(':id')
     deleteProduct( @Param('id') prodId: string){
         this.productsService.deleteProduct(prodId);

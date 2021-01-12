@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import { Model, Document } from 'mongoose';
 
 export const ProductSchema = new mongoose.Schema({
     title: {type: String, required: true},
@@ -6,12 +7,10 @@ export const ProductSchema = new mongoose.Schema({
     price: {type: Number, required: true}
 })
 
-export class Product {
+export interface Product extends mongoose.Document {
+    id: string;
+    title: string; 
+    description: string;
+    price: number;
 
-    constructor(
-        public id: string,
-        public title: string, 
-        public description: string,
-        public price: number
-        ){}
 }
